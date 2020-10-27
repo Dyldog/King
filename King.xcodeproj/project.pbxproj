@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6208D8E02547E38A00E42291 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6208D8DF2547E38A00E42291 /* Deck.swift */; };
+		6208D8E32547E40F00E42291 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6208D8E22547E40F00E42291 /* CardView.swift */; };
+		6208D8E62547E45200E42291 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6208D8E52547E45200E42291 /* DeckView.swift */; };
+		6208D8E92547E9C600E42291 /* KingRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6208D8E82547E9C600E42291 /* KingRuleView.swift */; };
+		6208D8EC2547EA1E00E42291 /* KingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6208D8EB2547EA1E00E42291 /* KingCardView.swift */; };
 		62E8D59F2547B0430018B698 /* KingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E8D59E2547B0430018B698 /* KingApp.swift */; };
 		62E8D5A12547B0430018B698 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E8D5A02547B0430018B698 /* ContentView.swift */; };
 		62E8D5A32547B0480018B698 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62E8D5A22547B0480018B698 /* Assets.xcassets */; };
@@ -14,6 +19,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6208D8DF2547E38A00E42291 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		6208D8E22547E40F00E42291 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		6208D8E52547E45200E42291 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		6208D8E82547E9C600E42291 /* KingRuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingRuleView.swift; sourceTree = "<group>"; };
+		6208D8EB2547EA1E00E42291 /* KingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingCardView.swift; sourceTree = "<group>"; };
 		62E8D59B2547B0430018B698 /* King.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = King.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62E8D59E2547B0430018B698 /* KingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingApp.swift; sourceTree = "<group>"; };
 		62E8D5A02547B0430018B698 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,7 +63,12 @@
 			isa = PBXGroup;
 			children = (
 				62E8D59E2547B0430018B698 /* KingApp.swift */,
+				6208D8E82547E9C600E42291 /* KingRuleView.swift */,
 				62E8D5A02547B0430018B698 /* ContentView.swift */,
+				6208D8EB2547EA1E00E42291 /* KingCardView.swift */,
+				6208D8DF2547E38A00E42291 /* Deck.swift */,
+				6208D8E52547E45200E42291 /* DeckView.swift */,
+				6208D8E22547E40F00E42291 /* CardView.swift */,
 				62E8D5A22547B0480018B698 /* Assets.xcassets */,
 				62E8D5A72547B0480018B698 /* Info.plist */,
 				62E8D5A42547B0480018B698 /* Preview Content */,
@@ -138,8 +153,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6208D8E62547E45200E42291 /* DeckView.swift in Sources */,
+				6208D8EC2547EA1E00E42291 /* KingCardView.swift in Sources */,
+				6208D8E02547E38A00E42291 /* Deck.swift in Sources */,
 				62E8D5A12547B0430018B698 /* ContentView.swift in Sources */,
+				6208D8E32547E40F00E42291 /* CardView.swift in Sources */,
 				62E8D59F2547B0430018B698 /* KingApp.swift in Sources */,
+				6208D8E92547E9C600E42291 /* KingRuleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +288,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"King/Preview Content\"";
 				DEVELOPMENT_TEAM = 6CW3378X23;
 				ENABLE_PREVIEWS = YES;
@@ -291,6 +312,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"King/Preview Content\"";
 				DEVELOPMENT_TEAM = 6CW3378X23;
 				ENABLE_PREVIEWS = YES;

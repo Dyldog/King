@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-enum Card: Int, CaseIterable {
+enum CardValue: Int, CaseIterable, Comparable {
+    static func < (lhs: CardValue, rhs: CardValue) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+    
     case king
     case queen
     case jack
@@ -37,6 +41,33 @@ enum Card: Int, CaseIterable {
         case .three: return "3"
         case .two: return "2"
         case .ace: return "A"
+        }
+    }
+}
+
+enum Suit: Int, CaseIterable {
+    case hearts
+    case diamonts
+    case clubs
+    case spades
+    
+    var color: Color {
+        switch self {
+        case .hearts: return .red
+        case .clubs: return .black
+        case .diamonts: return .blue
+        case .spades: return .white
+        }
+    }
+}
+
+struct Card: Equatable {
+    let suit: Suit
+    let value: CardValue
+    
+    static var allCases: [Card] = Suit.allCases.flatMap { suit in
+        CardValue.allCases.map { value in
+            Card(suit: suit, value: value)
         }
     }
 }
@@ -148,18 +179,38 @@ enum Rule {
     }
 }
 
-struct CardRule: Identifiable {
-    let card: Card
+struct CardRule: Identifiable, Comparable {
+    static func < (lhs: CardRule, rhs: CardRule) -> Bool {
+        return lhs.card < rhs.card
+    }
+    
+    static func == (lhs: CardRule, rhs: CardRule) -> Bool {
+        return lhs.card == rhs.card && lhs.rule == rhs.rule
+    }
+    
+    var color: Color = .blue
+    
+    let card: CardValue
     let rule: Rule
     let id: UUID = .init()
     
-    init(_ card: Card, _ rule: Rule) {
+    init(_ card: CardValue, _ rule: Rule) {
         self.card = card
         self.rule = rule
     }
+    
+    var text: String {
+        return """
+        \(card.title): \(rule.title)
+
+        \(rule.ruleDescription)
+        """
+    }
+    
+    
 }
 
-func ruleForCard(_ card: Card) -> Rule {
+func ruleForCard(_ card: CardValue) -> Rule {
     switch card {
     case .king: return .kingsCup
     case .queen: return .questionMaster
@@ -177,68 +228,65 @@ func ruleForCard(_ card: Card) -> Rule {
     }
 }
 
-let gameRules: [CardRule] = Card.allCases.map {
-    CardRule($0, ruleForCard($0))
+struct SuitedCardRule: DeckCard {
+    var text: String = ""
+    
+    var color: Color { suit.color }
+    
+    var id = UUID()
+    
+    static func == (lhs: SuitedCardRule, rhs: SuitedCardRule) -> Bool {
+        return lhs.rule == rhs.rule && lhs.suit == rhs.suit
+    }
+    
+    private let cardRule: CardRule
+    let suit: Suit
+    
+    var rule: Rule {
+        return cardRule.rule
+    }
+    
+    var value: CardValue {
+        return cardRule.card
+    }
+    
+    init(rule: CardRule, suit: Suit) {
+        self.cardRule = rule
+        self.suit = suit
+    }
 }
 
+var gameRules: [CardRule] = CardValue.allCases.map {
+    CardRule($0, ruleForCard($0))
+}.shuffled()
+
 struct ContentView: View {
-    let rules = gameRules
-    @State var detailRule: CardRule?
-    var showDetail: Bool {
-        get { return detailRule != nil }
-        set { detailRule = nil }
+    @State var showRules: Bool = false
+    
+    let rules: [CardRule]
+    @State var deck: Deck<SuitedCardRule>
+    
+    init() {
+        rules = gameRules
+        let cards = Suit.allCases.flatMap { suit in
+            gameRules.map { rule in
+                SuitedCardRule(rule: rule, suit: suit)
+            }
+        }.shuffled()
+        _deck = State(initialValue: Deck(cards: cards))
     }
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                VStack(spacing: 10) {
-                    
-                    ForEach(rules) { rule in
-                        Button(action: {
-                            detailRule = rule
-                        }) {
-                            HStack {
-                                Spacer()
-                                Text(rule.card.title)
-                                    .font(.headline)
-                                Text(rule.rule.title)
-                                Spacer()
-                            }
-                            .padding()
-                        }
-                        .background(Color.blue)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(10)
-                        .padding(.horizontal)
-                    }
-                }
-            }
-            
-            if let detailRule = detailRule {
-                ZStack{
-                    VStack(spacing: 20) {
-                        Text(detailRule.rule.title)
-                            .font(.largeTitle)
-                        Text(detailRule.rule.ruleDescription)
-                            .font(.title2)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.white)
-                    .ignoresSafeArea()
-                }
-                .onTapGesture {
-                    self.detailRule = nil
-                }
-            }
+        if showRules {
+            KingRuleView(showRules: $showRules, rules: rules)
+        } else {
+            KingCardView(showRules: $showRules, deck: $deck)
         }
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
